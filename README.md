@@ -1,0 +1,1 @@
+Project to build montage fronts using Shopify data
