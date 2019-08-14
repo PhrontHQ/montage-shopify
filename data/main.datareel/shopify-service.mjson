@@ -1,0 +1,23 @@
+{
+    "root": {
+        "prototype": "data/main.datareel/service/shopify-service",
+        "values": {
+            "name": "ShopifyService",
+            "exportName": "ShopifyService",
+            "mappings": [
+                {"@": "attachmentMapping"}
+            ],
+            "types": [
+                {"@": "attachment"}
+            ]
+        }
+    },
+
+    "attachment": {
+        "object": "data/main.datareel/model/attachment.mjson"
+    },
+
+    "attachmentMapping": {
+        "object": "data/main.datareel/mapping/attachment-mapping.mjson"
+    }
+}

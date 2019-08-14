@@ -1,0 +1,16 @@
+{
+    "root": {
+        "prototype": "montage/data/service/data-service",
+        "values": {
+            "name": "DataService",
+            "childServices": [
+                {"@": "shopifyService"}
+            ]
+        }
+    },
+
+    "shopifyService": {
+        "object": "data/main.datareel/shopify-service.mjson"
+    }
+}
+

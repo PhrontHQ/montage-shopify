@@ -1,0 +1,19 @@
+{
+    "name": "montage-shopify",
+    "version": "0.1.0",
+    "description": "framework",
+    "dependencies": {
+        "montage": "git://github.com/montagejs/montage.git",
+        "shopify-buy": "~2.7.0"
+    },
+    "devDependencies": {
+        "montage-testing": "~0.5.1"
+    },
+    "exclude": [
+        "run-tests.html",
+        "test"
+    ],
+    "bundle": [
+        "ui/main.reel"
+    ]
+}

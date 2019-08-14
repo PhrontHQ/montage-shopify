@@ -1,0 +1,71 @@
+{
+    "root": {
+        "prototype": "montage/core/meta/module-object-descriptor",
+        "values": {
+            "name": "Attachment",
+            "propertyDescriptors": [
+                {"@": "id"},
+                {"@": "url"},
+                {"@": "filename"},
+                {"@": "size"},
+                {"@": "type"},
+                {"@": "thumbnails"}
+            ],
+            "objectDescriptorModule": {
+                "%":"data/main.datareel/model/attachment.mjson"
+            },
+            "exportName": "Attachment",
+            "module": {
+                "%": "data/main.datareel/model/attachment"
+            },
+            "modulePrototype":{"@": "attachment"}
+        }
+    },
+    "attachment": {
+        "object": "data/main.datareel/model/attachment"
+    },
+
+    "id": {
+        "prototype": "montage/core/meta/property-descriptor",
+        "values": {
+            "name": "id",
+            "valueType": "string"
+        }
+    },
+    "url": {
+        "prototype": "montage/core/meta/property-descriptor",
+        "values": {
+            "name": "url",
+            "valueType": "string"
+        }
+    },
+    "filename": {
+        "prototype": "montage/core/meta/property-descriptor",
+        "values": {
+            "name": "filename",
+            "valueType": "string"
+        }
+    },
+    "size": {
+        "prototype": "montage/core/meta/property-descriptor",
+        "values": {
+            "name": "size",
+            "valueType": "number"
+        }
+    },
+    "type": {
+        "prototype": "montage/core/meta/property-descriptor",
+        "values": {
+            "name": "type",
+            "valueType": "string"
+        }
+    },
+    "thumbnails": {
+        "prototype": "montage/core/meta/property-descriptor",
+        "values": {
+            "name": "thumbnails",
+            "valueType": "object"
+        }
+    }
+
+}
