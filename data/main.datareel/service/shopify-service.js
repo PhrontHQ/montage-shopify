@@ -1,12 +1,12 @@
-var HttpService = require("montage/data/service/http-service").HttpService,
-    DataService = require("montage/data/service/data-service").DataService,
-    Client =  require("shopify-buy").Client;
+var GraphQLService = require("montage/data/service/graphql-service").GraphQLService,
+    DataService = require("montage/data/service/data-service").DataService;
+    //Client =  require("shopify-buy").Client;
+    //Client =  require("shopify-buy").Client;
 
-var client = Client.buildClient({
-  domain: 'etiama.myshopify.com',
-  storefrontAccessToken: 'f709c6b5f736fc92f4b5b3d6e48aff67'
-});
-;
+// var client = Client.buildClient({
+//   domain: 'etiama.myshopify.com',
+//   storefrontAccessToken: 'f709c6b5f736fc92f4b5b3d6e48aff67'
+// });
 
 require("montage/core/extras/string");
 
@@ -24,7 +24,7 @@ require("montage/core/extras/string");
  * @link https://dev.twitter.com/rest/
  * @extends external:DataService
  */
-exports.Airtable = exports.AirtableService = HttpService.specialize(/** @lends AirtableService.prototype */ {
+exports.ShopifyService = exports.ShopifyService = GraphQLService.specialize(/** @lends AirtableService.prototype */ {
 
     /***************************************************************************
      * Serialization
@@ -37,9 +37,18 @@ exports.Airtable = exports.AirtableService = HttpService.specialize(/** @lends A
             result = this.super(deserializer);
             // console.log("AirtableService super deserialize #"+deserializeSelfCount++);
 
-            value = deserializer.getProperty("APIKey");
+            value = deserializer.getProperty("storeName");
             if (value) {
-                this.APIKey = value;
+                this.storeName = value.toLowerCase();
+            }
+            
+            value = deserializer.getProperty("storefrontAccessToken");
+            if (value) {
+                this.storefrontAccessToken = value;
+            }
+            value = deserializer.getProperty("adminAccessToken");
+            if (value) {
+                this.adminAccessToken = value;
             }
             return result;
         }
@@ -58,17 +67,65 @@ exports.Airtable = exports.AirtableService = HttpService.specialize(/** @lends A
         }
     },
 
-    //This is per base, needs to be re-factored
-    APIKey: {
+    storeName: {
         value: undefined
+    },
+
+    //This is per app
+    storefrontAccessToken: {
+        value: undefined
+    },
+    storefrontAccessTokenHeader: {
+        value: "X-Shopify-Storefront-Access-Token"
+    },
+    storefrontAccessURIFragment: {
+        value: ".myshopify.com/api/graphql"
+    },
+
+    //This is per app
+    adminAccessToken: {
+        value: undefined
+    },
+    adminAccessTokenHeader: {
+        value: "X-Shopify-Access-Token"
+    },
+
+    adminAccessURIFragment: {
+        value: ".myshopify.com/admin/api/graphql.json"
+    },
+    _adminAccessURI: {
+        value: undefined
+    },
+
+    adminAccessURI: {
+        get: function() {
+            if(!this._adminAccessURI) {
+                this._adminAccessURI = "https://";
+                this._adminAccessURI += this.storeName;
+                this._adminAccessURI += this.adminAccessURIFragment;
+            }
+            return this._adminAccessURI;
+        }
     },
 
     baseId: {
         value: "appZ6CEB0Bd9fn7gK"
     },
 
-    baseURI: {
-        value: "https://api.airtable.com/v0/"
+
+    _storefrontAccessURI: {
+        value: undefined
+    },
+
+    storefrontAccessURI: {
+        get: function() {
+            if(!this._storefrontAccessURI) {
+                this._storefrontAccessURI = "https://";
+                this._storefrontAccessURI += this.storeName;
+                this._storefrontAccessURI += this.storefrontAccessURIFragment;
+            }
+            return this._storefrontAccessURI;
+        }
     },
 
     _authorizedBaseURI: {
@@ -123,7 +180,7 @@ exports.Airtable = exports.AirtableService = HttpService.specialize(/** @lends A
     mapObjectDescriptorToRawDataType: {
         value: function (objectDescriptor) {
             switch(objectDescriptor.name) {
-                case "Furniture": return "Furniture";
+                case "Product": return "Product";
                 default: return objectDescriptor.name+"s";
             }
         }
@@ -262,7 +319,7 @@ function runAction(base, method, path, queryParams, bodyData, callback) {
     /** 
      * 
      * 
-     * $ curl "https://api.airtable.com/v0/appZ6CEB0Bd9fn7gK/Furniture?maxRecords=3&view=Main%20View" \
+     * $ curl "https://api.airtable.com/v0/appZ6CEB0Bd9fn7gK/Product?maxRecords=3&view=Main%20View" \
      * 
      * 
      * 
@@ -293,14 +350,38 @@ function runAction(base, method, path, queryParams, bodyData, callback) {
                 criteria = stream.query.criteria,
                 parameters = criteria.parameters,
                 type = this.mapObjectDescriptorToRawDataType(query.type),
-                apiUrl = this.authorizedBaseURI + "/" + type , /*+"?view=Main%20View"*/
+                apiUrl = this.storefrontAccessURI,
                 headers, body, types, sendCredentials,
-                rawQueryString = this.mapDataQueryToRawDataQuery(query);
+                rawQueryString = this.mapDataQueryToRawDataQuery(query),
+                body = "{\
+                    collections(first:5){\
+                      edges{\
+                        node{\
+                          id\
+                          title\
+                          description\
+                          descriptionHtml\
+                          handle\
+                          image {\
+                            altText\
+                            originalSrc\
+                            transformedSrc\
+                          }\
+                          products(first:100) {\
+                                edges{\
+                                node{\
+                                id\
+                                title\
+                                description\
+                                  descriptionHtml\
+                              }\
+                            }\
+                          }\
+                        }\
+                      }\
+                    }\
+                  }"
 
-            if(rawQueryString && rawQueryString.length) {
-                apiUrl+="?";
-                apiUrl+=rawQueryString;
-            }
                 
                 //maxRecords=3
                 //view=Main%20View
@@ -313,21 +394,42 @@ function runAction(base, method, path, queryParams, bodyData, callback) {
                 //Shared Secret: 07aeefeb0d3c94e3352700f02d063c77
                 //Private applications authenticate with Shopify through basic HTTP authentication, using the URL format https://{apikey}:{password}@{hostname}/admin/api/{version}/{resource}.json
                 headers = {
-                    'authorization': 'Bearer ' + this.APIKey,
-                    'x-api-version': '0.1.0',
-                    'x-airtable-application-id': "appZ6CEB0Bd9fn7gK",
-                    'x-airtable-user-agent': 'Airtable.js/' + "0.5.7"
-                    X-Shopify-Storefront-Access-Token: < storefront-access-token >
-
+                    "Content-Type": "application/graphql",
+                    "Accept": "application/json"
                 };
+                headers[this.storefrontAccessTokenHeader] = this.storefrontAccessToken,
+
                 sendCredentials = false;
             
         
             return self.fetchHttpRawData(apiUrl, headers, body, types, query, sendCredentials).then(
-                function (data) {
-                    if (data) {
-                        self.addRawData(stream, data.records);
-                        self.rawDataDone(stream);
+                function (result) {
+                    if (result) {
+                        if(result.errors) {
+
+                        }
+                        else {
+                            //We need to figure out what type is returned, and they could be nested, and nothing to do about the type of the query itself.
+                            var data = result.data,
+                                types = Object.keys(data),
+                                i=0, countI = types.length, iType, iEdges, 
+                                j=0, countJ, jNodes;
+
+                            for(;(i<countI);i++) {
+                                iType = types[i];
+                                iEdges = data[iType]["edges"];
+                                countJ = iEdges.length;
+                                jRawData = [];
+                                for(j=0;(j<countJ);j++) {
+                                    jNode = iEdges[j]["node"];
+                                    jRawData.push(jNode);
+                                }
+                                self.addRawData(stream, jRawData);
+
+                            }
+
+                            self.rawDataDone(stream);    
+                        }
                     }
             });
         }

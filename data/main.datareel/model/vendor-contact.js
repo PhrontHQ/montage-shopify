@@ -1,30 +1,28 @@
 var Montage = require("montage").Montage;
 
 /**
- * @class Attachment
+ * @class VendorContact
  * @extends Montage
  */
 
 
-exports.Attachment = Montage.specialize(/** @lends Attachment.prototype */ {
 
-    id: {
+exports.VendorContact = Montage.specialize(/** @lends VendorContact.prototype */ {
+
+    name: {
         value: undefined
     },
-    url: {
+    vendors: {
         value: undefined
     },
-    filename: {
+    photos: {
         value: undefined
     },
-    size: {
+    phoneNumber: {
         value: undefined
     },
-    type: {
+    email: {
         value: undefined
-    },
-    thumbnails: {
-        value: undefined
-    }
+    }           
 
 });

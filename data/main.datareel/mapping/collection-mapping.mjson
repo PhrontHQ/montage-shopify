@@ -1,0 +1,37 @@
+{
+    "root": {
+        "prototype": "montage/data/service/expression-data-mapping",
+        "values": {
+            "objectDescriptor": {"@": "CollectionDescriptor"},
+            "rawDataPrimaryKeys":["id"],
+            "objectMapping": {
+                "rules": {
+                    "title": {"<->": "title"},
+                    "description": {"<->": "description"},
+                    "descriptionHtml": {"<->": "descriptionHtml"},
+                    "image": {"<->": "image",
+                                    "converter": {"@": "imageConverter"},
+                                         "debug":true},
+                    "type": {"<->": "type"},
+                    "url": {"<->": "url"}
+                }
+            },
+            "rawDataMapping": {
+                "rules": {
+                }
+            },
+            "requisitePropertyNames": [
+                "title","description","descriptionHtml","image","type","url"
+            ]
+        }
+    },
+    "imageConverter": {
+        "prototype": "montage/data/converter/raw-embedded-value-to-object-converter",
+        "values": {
+        }
+    },
+
+    "CollectionDescriptor": {
+        "object": "data/main.datareel/model/collection.mjson"
+    }
+}

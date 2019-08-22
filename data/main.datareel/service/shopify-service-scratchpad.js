@@ -71,7 +71,7 @@ curl "https://api.airtable.com/v0/appZ6CEB0Bd9fn7gK/Vendors?OR(id=rec8116cdd7608
             }
           }
         ],
-        "Furniture": [
+        "Product": [
           "recdcFe6aJsizmQpB",
           "recl9oEaIea9v6lXH"
         ]
@@ -150,7 +150,7 @@ curl "https://api.airtable.com/v0/appZ6CEB0Bd9fn7gK/Vendors?OR(id=rec8116cdd7608
             }
           }
         ],
-        "Furniture": [
+        "Product": [
           "rec2PWpODv7fxkK0k",
           "rechzeFYyEiVWOBlC",
           "recmaihpLbKCRNRMl",

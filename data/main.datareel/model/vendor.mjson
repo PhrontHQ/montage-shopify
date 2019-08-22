@@ -1,0 +1,109 @@
+{
+    "root": {
+        "prototype": "montage/core/meta/module-object-descriptor",
+        "values": {
+            "name": "Vendor",
+            "propertyDescriptors": [
+                {"@": "name"},
+                {"@": "products"},
+                {"@": "notes"},
+                {"@": "logos"},
+                {"@": "salesContact"},
+                {"@": "vendorPhoneNumber"},
+                {"@": "closestShowroomAddress"},
+                {"@": "catalogLink"},
+                {"@": "shippingDetails"}
+            ],
+            "objectDescriptorModule": {
+                "%": "data/main.datareel/model/vendor.mjson"
+            },
+            "exportName": "Vendor",
+            "module": {
+                "%": "data/main.datareel/model/vendor"
+            },
+            "object":{"@": "vendor"}
+        }
+    },
+    "vendor": {
+        "object": "data/main.datareel/model/vendor"
+    },
+    "name": {
+        "prototype": "montage/core/meta/property-descriptor",
+        "values": {
+            "name": "name",
+            "valueType": "string"
+        }
+    },
+    "products": {
+        "prototype": "montage/core/meta/property-descriptor",
+        "values": {
+            "name": "products",
+            "cardinality": -1,
+            "valueDescriptor": {"@": "product_descriptor"}       
+        }
+    },
+    "notes": {
+        "prototype": "montage/core/meta/property-descriptor",
+        "values": {
+            "name": "notes",
+            "valueType": "string"
+        }
+    },
+    "logos": {
+        "prototype": "montage/core/meta/property-descriptor",
+        "values": {
+            "name": "logos",
+            "cardinality": -1,
+            "valueDescriptor": {"@": "image_descriptor"}       
+        }
+    },
+    "salesContact": {
+        "prototype": "montage/core/meta/property-descriptor",
+        "values": {
+            "name": "salesContact",
+            "valueType": "string",
+            "cardinality": -1,
+            "valueDescriptor": {"@": "vendor_contact_descriptor"}       
+       }
+    },
+    "vendorPhoneNumber": {
+        "prototype": "montage/core/meta/property-descriptor",
+        "values": {
+            "name": "vendorPhoneNumber",
+            "valueType": "string"
+        }
+    },
+    "closestShowroomAddress": {
+        "prototype": "montage/core/meta/property-descriptor",
+        "values": {
+            "name": "closestShowroomAddress",
+            "valueType": "string"
+        }
+    },
+    "catalogLink": {
+        "prototype": "montage/core/meta/property-descriptor",
+        "values": {
+            "name": "catalogLink",
+            "valueType": "string"
+        }
+    },
+    "shippingDetails": {
+        "prototype": "montage/core/meta/property-descriptor",
+        "values": {
+            "name": "shippingDetails",
+            "valueType": "array"
+        }
+    },
+
+    "product_descriptor": {
+        "object": "data/main.datareel/model/product.mjson"
+    },
+    "image_descriptor": {
+        "object": "data/main.datareel/model/image.mjson"
+    },
+    "vendor_contact_descriptor": {
+        "object": "data/main.datareel/model/vendor-contact.mjson"
+    }
+
+
+}

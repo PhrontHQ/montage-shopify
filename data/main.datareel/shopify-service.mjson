@@ -5,19 +5,19 @@
             "name": "ShopifyService",
             "exportName": "ShopifyService",
             "mappings": [
-                {"@": "attachmentMapping"}
+                {"@": "collectionMapping"}
             ],
             "types": [
-                {"@": "attachment"}
+                {"@": "collection"}
             ]
         }
     },
 
-    "attachment": {
-        "object": "data/main.datareel/model/attachment.mjson"
+    "collection": {
+        "object": "data/main.datareel/model/collection.mjson"
     },
 
-    "attachmentMapping": {
-        "object": "data/main.datareel/mapping/attachment-mapping.mjson"
+    "collectionMapping": {
+        "object": "data/main.datareel/mapping/collection-mapping.mjson"
     }
 }

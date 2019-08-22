@@ -1,0 +1,176 @@
+{
+    "root": {
+        "prototype": "montage/core/meta/module-object-descriptor",
+        "values": {
+            "name": "Product",
+            "propertyDescriptors": [
+                {"@": "title"},
+                {"@": "orders"},
+                {"@": "pictures"},
+                {"@": "description"},
+                {"@": "link"},
+                {"@": "type"},
+                {"@": "unitCost"},
+                {"@": "materialsAndFinishes"},
+                {"@": "settings"},
+                {"@": "sizeWxLxH"},
+                {"@": "notes"},
+                {"@": "schematics"},
+                {"@": "vendor"},
+                {"@": "designers"},
+                {"@": "totalInventory"},
+                {"@": "totalVariants"},
+                {"@": "updatedAt"}
+            ],
+            "objectDescriptorModule": {
+                "%": "data/main.datareel/model/product.mjson"
+            },
+            "exportName": "Product",
+            "module": {
+                "%": "data/main.datareel/model/product"
+            },
+            "object":{"@": "product"}
+        }
+    },
+    "product": {
+        "object": "data/main.datareel/model/product"
+    },
+
+    "title": {
+        "prototype": "montage/core/meta/property-descriptor",
+        "values": {
+            "name": "title",
+            "valueType": "string"
+        }
+    },
+    "orders": {
+        "prototype": "montage/core/meta/property-descriptor",
+        "values": {
+            "name": "orders",
+            "cardinality": -1,
+            "valueDescriptor": {"@": "order_line_item"}       
+        }
+    },
+     "pictures": {
+        "prototype": "montage/core/meta/property-descriptor",
+        "values": {
+            "name": "pictures",
+            "cardinality": -1,
+            "valueDescriptor": {"@": "image_descriptor"}
+        }
+    },
+    "description": {
+        "prototype": "montage/core/meta/property-descriptor",
+        "values": { 
+            "name": "description",
+            "valueType": "string"
+        }
+    },
+    "link": {
+        "prototype": "montage/core/meta/property-descriptor",
+        "values": { 
+            "name": "link",
+            "valueType": "string"
+        }
+    },
+    "type": {
+        "prototype": "montage/core/meta/property-descriptor",
+        "values": { 
+            "name": "type",
+            "valueType": "string"
+        }
+    },
+    "unitCost": {
+        "prototype": "montage/core/meta/property-descriptor",
+        "values": { 
+            "name": "unitCost",
+            "valueType": "number"
+        }
+    },
+    "tags": {
+        "prototype": "montage/core/meta/property-descriptor",
+        "values": { 
+            "name": "tags",
+            "valueType": "array"
+        }
+    },
+    "settings": {
+        "prototype": "montage/core/meta/property-descriptor",
+        "values": { 
+            "name": "settings",
+            "valueType": "array"
+        }
+    },
+     "sizeWxLxH": {
+        "prototype": "montage/core/meta/property-descriptor",
+        "values": { 
+            "name": "sizeWxLxH",
+            "valueType": "string"
+        }
+    },
+     "notes": {
+        "prototype": "montage/core/meta/property-descriptor",
+        "values": { 
+            "name": "notes",
+            "valueType": "string"
+        }
+    },
+    "schematics": {
+        "prototype": "montage/core/meta/property-descriptor",
+        "values": {
+            "name": "schematics",
+            "cardinality": -1,
+            "valueDescriptor": {"@": "image_descriptor"}
+        }
+    },
+    "vendor": {
+        "prototype": "montage/core/meta/property-descriptor",
+        "values": {
+            "name": "vendors",
+            "cardinality": 1,
+            "valueDescriptor": {"@": "vendor_descriptor"}       
+        }
+    },
+    "storefront": {
+        "prototype": "montage/core/meta/property-descriptor",
+        "values": {
+            "name": "storefront",
+            "cardinality": 1,
+            "valueDescriptor": {"@": "storefront_descriptor"}       
+        }
+    },
+    "totalInventory": {
+        "prototype": "montage/core/meta/property-descriptor",
+        "values": {
+            "name": "totalInventory",
+            "valueType": "number"
+        }
+    },
+    "totalVariants": {
+        "prototype": "montage/core/meta/property-descriptor",
+        "values": {
+            "name": "totalVariants",
+            "valueType": "number"
+        }
+    },
+    "updatedAt": {
+        "prototype": "montage/core/meta/property-descriptor",
+        "values": {
+            "name": "updatedAt",
+            "valueType": "date"
+        }
+    },
+    "order_line_item": {
+        "object": "data/main.datareel/model/order-line-item.mjson"
+    },
+    "vendor_descriptor": {
+        "object": "data/main.datareel/model/vendor.mjson"
+    },
+    "storefront_descriptor": {
+        "object": "data/main.datareel/model/storefront.mjson"
+    },
+    "image_descriptor": {
+        "object": "data/main.datareel/model/image.mjson"
+    }
+
+}
