@@ -5,10 +5,12 @@
             "name": "ShopifyService",
             "exportName": "ShopifyService",
             "mappings": [
-                {"@": "collectionMapping"}
+                {"@": "collectionMapping"},
+                {"@": "productMapping"}
             ],
             "types": [
-                {"@": "collection"}
+                {"@": "collection"},
+                {"@": "product"}
             ]
         }
     },
@@ -19,5 +21,13 @@
 
     "collectionMapping": {
         "object": "data/main.datareel/mapping/collection-mapping.mjson"
+    },
+
+    "product": {
+        "object": "data/main.datareel/model/product.mjson"
+    },
+
+    "productMapping": {
+        "object": "data/main.datareel/mapping/product-mapping.mjson"
     }
 }

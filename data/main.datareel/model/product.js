@@ -42,9 +42,6 @@ exports.Product = Montage.specialize(/** @lends Product.prototype */ {
     unitCost: {
         value: undefined
     },
-    materialsAndFinishes: {
-        value: undefined
-    },            
     settings: {
         value: undefined
     },            
@@ -71,9 +68,6 @@ exports.Product = Montage.specialize(/** @lends Product.prototype */ {
             }
         }
     },
-    designers: {
-        value: undefined
-    },            
     inStock: {
         get: function () {
             return this._inStock;

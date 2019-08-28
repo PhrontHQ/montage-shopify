@@ -6,18 +6,15 @@
             "propertyDescriptors": [
                 {"@": "title"},
                 {"@": "orders"},
-                {"@": "pictures"},
+                {"@": "images"},
                 {"@": "description"},
+                {"@": "descriptionHtml"},   
                 {"@": "link"},
                 {"@": "type"},
                 {"@": "unitCost"},
-                {"@": "materialsAndFinishes"},
                 {"@": "settings"},
-                {"@": "sizeWxLxH"},
                 {"@": "notes"},
-                {"@": "schematics"},
                 {"@": "vendor"},
-                {"@": "designers"},
                 {"@": "totalInventory"},
                 {"@": "totalVariants"},
                 {"@": "updatedAt"}
@@ -51,10 +48,10 @@
             "valueDescriptor": {"@": "order_line_item"}       
         }
     },
-     "pictures": {
+     "images": {
         "prototype": "montage/core/meta/property-descriptor",
         "values": {
-            "name": "pictures",
+            "name": "images",
             "cardinality": -1,
             "valueDescriptor": {"@": "image_descriptor"}
         }
@@ -63,6 +60,13 @@
         "prototype": "montage/core/meta/property-descriptor",
         "values": { 
             "name": "description",
+            "valueType": "string"
+        }
+    },
+    "descriptionHtml": {
+        "prototype": "montage/core/meta/property-descriptor",
+        "values": { 
+            "name": "descriptionHtml",
             "valueType": "string"
         }
     },
@@ -101,26 +105,11 @@
             "valueType": "array"
         }
     },
-     "sizeWxLxH": {
-        "prototype": "montage/core/meta/property-descriptor",
-        "values": { 
-            "name": "sizeWxLxH",
-            "valueType": "string"
-        }
-    },
      "notes": {
         "prototype": "montage/core/meta/property-descriptor",
         "values": { 
             "name": "notes",
             "valueType": "string"
-        }
-    },
-    "schematics": {
-        "prototype": "montage/core/meta/property-descriptor",
-        "values": {
-            "name": "schematics",
-            "cardinality": -1,
-            "valueDescriptor": {"@": "image_descriptor"}
         }
     },
     "vendor": {

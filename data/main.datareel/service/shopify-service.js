@@ -373,7 +373,16 @@ function runAction(base, method, path, queryParams, bodyData, callback) {
                                 id\
                                 title\
                                 description\
-                                  descriptionHtml\
+                                descriptionHtml\
+                                images(first:100) {\
+                                    edges{\
+                                        node{\
+                                            altText\
+                                            originalSrc\
+                                            transformedSrc\
+                                        }\
+                                    }\
+                                }\
                               }\
                             }\
                           }\

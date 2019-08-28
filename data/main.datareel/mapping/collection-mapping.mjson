@@ -12,6 +12,9 @@
                     "image": {"<->": "image",
                                     "converter": {"@": "imageConverter"},
                                          "debug":true},
+                    "products": {"<->": "products.edges.map{node}",
+                                    "converter": {"@": "productConverter"},
+                                         "debug":true},
                     "type": {"<->": "type"},
                     "url": {"<->": "url"}
                 }
@@ -21,11 +24,16 @@
                 }
             },
             "requisitePropertyNames": [
-                "title","description","descriptionHtml","image","type","url"
+                "title","description","descriptionHtml","image","products","type","url"
             ]
         }
     },
     "imageConverter": {
+        "prototype": "montage/data/converter/raw-embedded-value-to-object-converter",
+        "values": {
+        }
+    },
+    "productConverter": {
         "prototype": "montage/data/converter/raw-embedded-value-to-object-converter",
         "values": {
         }

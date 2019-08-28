@@ -24,8 +24,17 @@ exports.Collection = Montage.specialize(/** @lends Collection.prototype */ {
     ruleSet: {
         value: undefined
     },
-    products: {
+    _products: {
         value: undefined
+    },
+    products: {
+        get: function() {
+            return this._products;
+        },
+        set: function(value) {
+             this._products = value;
+        }
+
     }
 
-});
+}); 
