@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "description": "framework",
     "dependencies": {
-        "montage": "git://github.com/montagejs/montage.git",
+        "montage": "marchant/montage#montage-19",
         "shopify-buy": "~2.7.0"
     },
     "devDependencies": {
