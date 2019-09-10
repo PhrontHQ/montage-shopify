@@ -367,23 +367,65 @@ function runAction(base, method, path, queryParams, bodyData, callback) {
                             originalSrc\
                             transformedSrc\
                           }\
-                          products(first:100) {\
+                          products(first:100)   {\
                                 edges{\
-                                node{\
-                                id\
-                                title\
-                                description\
-                                descriptionHtml\
-                                images(first:100) {\
-                                    edges{\
-                                        node{\
-                                            altText\
-                                            originalSrc\
-                                            transformedSrc\
+                                    node{\
+                                        id\
+                                        title\
+                                        description\
+                                        descriptionHtml\
+                                        images(first:100) {\
+                                            edges{\
+                                                node{\
+                                                    altText\
+                                                    originalSrc\
+                                                    transformedSrc\
+                                                }\
+                                            }\
+                                        }\
+                                        vendor\
+                                        variants(first:5){\
+                                            edges{\
+                                                node{\
+                                                    id\
+                                                    title\
+                                                    price\
+                                                    image {\
+                                                        id\
+                                                        altText\
+                                                        originalSrc\
+                                                        transformedSrc\
+                                                    }\
+                                                    product {\
+                                                        id\
+                                                    }\
+                                                    availableForSale\
+                                                    requiresShipping\
+                                                    selectedOptions {\
+                                                        name\
+                                                        value\
+                                                    }\
+                                                    sku\
+                                                    weight\
+                                                    weightUnit\
+                                                    presentmentPrices(first:1) {\
+                                                        edges{\
+                                                                node {\
+                                                                    compareAtPrice {\
+                                                                        amount\
+                                                                        currencyCode\
+                                                                    }\
+                                                                    price {\
+                                                                    amount\
+                                                                    currencyCode\
+                                                                }\
+                                                        }\
+                                                    }\
+                                                }\
+                                            }\
                                         }\
                                     }\
                                 }\
-                              }\
                             }\
                           }\
                         }\

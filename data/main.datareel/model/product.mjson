@@ -17,7 +17,8 @@
                 {"@": "vendor"},
                 {"@": "totalInventory"},
                 {"@": "totalVariants"},
-                {"@": "updatedAt"}
+                {"@": "updatedAt"},
+                {"@": "variants"}
             ],
             "objectDescriptorModule": {
                 "%": "data/main.datareel/model/product.mjson"
@@ -115,9 +116,8 @@
     "vendor": {
         "prototype": "montage/core/meta/property-descriptor",
         "values": {
-            "name": "vendors",
-            "cardinality": 1,
-            "valueDescriptor": {"@": "vendor_descriptor"}       
+            "name": "vendor",
+            "valueType": "string"
         }
     },
     "storefront": {
@@ -149,6 +149,15 @@
             "valueType": "date"
         }
     },
+    "variants": {
+        "prototype": "montage/core/meta/property-descriptor",
+        "values": {
+            "name": "variants",
+            "cardinality": -1,
+            "valueDescriptor": {"@": "variant_descriptor"}
+        }
+    },
+
     "order_line_item": {
         "object": "data/main.datareel/model/order-line-item.mjson"
     },
@@ -160,6 +169,9 @@
     },
     "image_descriptor": {
         "object": "data/main.datareel/model/image.mjson"
+    },
+    "variant_descriptor": {
+        "object": "data/main.datareel/model/product-variant.mjson"
     }
 
 }

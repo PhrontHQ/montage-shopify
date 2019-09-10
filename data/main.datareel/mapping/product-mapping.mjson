@@ -21,10 +21,13 @@
                     "type": {"<->": "Type"},
                     "settings": {"<->": "fSettings"},
                     "notes": {"<->": "Notes"},
-                    "vendors": {
-                                    "<->": "Vendor",
-                                    "converter": {"@": "vendorsForeignKeyConverter"}},
-                    "grossSales": {"<->": "fields.property('Gross Sales')"}
+                    "vendor": {
+                                    "<->": "vendor"},
+                    "grossSales": {"<->": "fields.property('Gross Sales')"},
+                    "variants": {"<->": "variants.edges.map{node}",
+                                    "converter": {"@": "variantsConverter"},
+                                         "debug":true}
+
                 }
             },
             "rawDataMapping": {
@@ -32,7 +35,7 @@
                 }
             },
             "requisitePropertyNames": [
-                "title","description","descriptionHtml","images","link","type","vendors"
+                "title","description","descriptionHtml","images","link","type","vendor","variants"
             ]
         }
     },
@@ -56,7 +59,11 @@
         "values": {
             "convertExpression": "$.has(id)"
         }
-    }
-
+    },
+    "variantsConverter": {
+        "prototype": "montage/data/converter/raw-embedded-value-to-object-converter",
+        "values": {
+        }
+    }   
 
 }

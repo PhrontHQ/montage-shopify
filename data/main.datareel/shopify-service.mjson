@@ -6,11 +6,17 @@
             "exportName": "ShopifyService",
             "mappings": [
                 {"@": "collectionMapping"},
-                {"@": "productMapping"}
+                {"@": "productVariantMapping"},
+                {"@": "productMapping"},
+                {"@": "productVariantPricePairMapping"},
+                {"@": "moneyMapping"}
             ],
             "types": [
                 {"@": "collection"},
-                {"@": "product"}
+                {"@": "product"},
+                {"@": "productVariant"},
+                {"@": "productVariantPricePair"},
+                {"@": "money"}
             ]
         }
     },
@@ -29,5 +35,30 @@
 
     "productMapping": {
         "object": "data/main.datareel/mapping/product-mapping.mjson"
+    },
+
+    "productVariant": {
+        "object": "data/main.datareel/model/product-variant.mjson"
+    },
+
+    "productVariantMapping": {
+        "object": "data/main.datareel/mapping/product-variant-mapping.mjson"
+    },
+
+    "productVariantPricePair": {
+        "object": "data/main.datareel/model/product-variant-price-pair.mjson"
+    },
+
+    "productVariantPricePairMapping": {
+        "object": "data/main.datareel/mapping/product-variant-price-pair-mapping.mjson"
+    },
+
+    "money": {
+        "object": "data/main.datareel/model/money.mjson"
+    },
+
+    "moneyMapping": {
+        "object": "data/main.datareel/mapping/money-mapping.mjson"
     }
+
 }

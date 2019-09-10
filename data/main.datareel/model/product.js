@@ -10,7 +10,7 @@ var Montage = require("montage").Montage,
 
 exports.Product = Montage.specialize(/** @lends Product.prototype */ {
 
-    name: {
+    title: {
         value: undefined
     },
     orders: {
@@ -54,17 +54,17 @@ exports.Product = Montage.specialize(/** @lends Product.prototype */ {
     schematics: {
         value: undefined
     },            
-    _vendors: {
+    _vendor: {
         value: null
     },
 
-    vendors: {
+    vendor: {
         get: function () {
-            return this._vendors;
+            return this._vendor;
         },
         set: function (value) {
-            if (this._vendors !== value) {
-                this._vendors = value;
+            if (this._vendor !== value) {
+                this._vendor = value;
             }
         }
     },
