@@ -1,6 +1,6 @@
 var GraphQLService = require("montage/data/service/graphql-service").GraphQLService,
     DataService = require("montage/data/service/data-service").DataService,
-    equal = require("fast-deep-equal");
+    equal = require("fast-deep-equal/es6");
 
     //Client =  require("shopify-buy").Client;
     //Client =  require("shopify-buy").Client;
