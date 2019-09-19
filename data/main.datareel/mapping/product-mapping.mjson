@@ -22,12 +22,16 @@
                     "settings": {"<->": "fSettings"},
                     "notes": {"<->": "Notes"},
                     "vendor": {
-                                    "<->": "vendor"},
+                                    "<->": "metafields.edges.map{node}.filter{key == 'vendor'}.last().value",
+                                    "converter": {"@": "vendorsForeignKeyConverter"},
+                                         "debug":true},
                     "grossSales": {"<->": "fields.property('Gross Sales')"},
                     "variants": {"<->": "variants.edges.map{node}",
                                     "converter": {"@": "variantsConverter"},
+                                         "debug":true},
+                    "locations": {"<->": "metafields.edges.map{node}.filter{key == 'locations'}",
+                                    "converter": {"@": "locationsForeignKeyConverter"},
                                          "debug":true}
-
                 }
             },
             "rawDataMapping": {
@@ -35,7 +39,7 @@
                 }
             },
             "requisitePropertyNames": [
-                "title","description","descriptionHtml","images","link","type","vendor","variants"
+                "title","description","descriptionHtml","images","link","type","vendor","variants","locations"
             ]
         }
     },
@@ -57,13 +61,18 @@
     "vendorsForeignKeyConverter": {
         "prototype": "montage/data/converter/raw-property-value-to-object-converter",
         "values": {
-            "convertExpression": "$.has(id)"
+            "convertExpression": "id == $"
         }
     },
     "variantsConverter": {
         "prototype": "montage/data/converter/raw-embedded-value-to-object-converter",
         "values": {
         }
-    }   
-
+    },
+    "locationsForeignKeyConverter": {
+        "prototype": "montage/data/converter/raw-property-value-to-object-converter",
+        "values": {
+            "convertExpression": "$.has(id)"
+        }
+    }
 }

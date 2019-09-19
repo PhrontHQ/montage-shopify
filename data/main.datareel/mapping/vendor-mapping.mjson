@@ -6,18 +6,12 @@
             "rawDataPrimaryKeys":["id"],
             "objectMapping": {
                 "rules": {
-                    "name": {"<->": "fields.Name"},
-                    "notes": {"<->": "fields.Notes"},
-                    "products": {"<->": "fields.Product",
-                                    "converter": {"@": "productForeignKeyConverter"}},
-                    "logos": {"<->": "fields.Logo",
-                                     "converter": {"@": "logosConverter"}},
-
-                    "detections": {
-                        "<-": "{sensorId: id, rawData: icd101aReport.detection}",
-                        "converter": {"@": "detectionsForeignKeyConverter"}
-                    }
-
+                    "firstName": {"<->": "firstName"},
+                    "lastName": {"<->": "lastName"},
+                    "email": {"<->": "email"},
+                    "phone": {"<->": "phone"},
+                    "addresses": {"<->": "addresses",
+                                    "converter": {"@": "addressesConverter"}}
                 }
             },
             "rawDataMapping": {
@@ -25,7 +19,7 @@
                 }
             },
             "requisitePropertyNames": [
-                "id","name","notes","logos"
+                "firstName","lastName","email","phone","addresses"
             ]
         }
     },
@@ -33,23 +27,9 @@
     "VendorDescriptor": {
         "object": "data/main.datareel/model/vendor.mjson"
     },
-    "productForeignKeyConverter": {
-        "prototype": "montage/data/converter/raw-property-value-to-object-converter",
-        "values": {
-            "convertExpression": "$.has(id)"
-        }
-    },
-    "detectionsForeignKeyConverter": {
-        "prototype": "montage/data/converter/raw-property-value-to-object-converter",
-        "properties": {
-            "convertExpression": "sensorId == $.id && rawData == $.icd101aReport.detection"
-        }
-    },
-    "logosConverter": {
+    "addressesConverter": {
         "prototype": "montage/data/converter/raw-embedded-value-to-object-converter",
         "values": {
         }
     }
-
-
 }

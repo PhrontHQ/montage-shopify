@@ -105,31 +105,22 @@ var Montage = require("montage").Montage;
 
 exports.Vendor = Montage.specialize(/** @lends Vendor.prototype */ {
 
-    name: {
+    firstName: {
         value: undefined
     },
-    products: {
+    lastName: {
         value: undefined
     },
-    notes: {
+    email: {
         value: undefined
     },
-    logo: {
+    phone: {
         value: undefined
     },
-    salesContact: {
+    addresses: {
         value: undefined
     },
-    vendorPhoneNumber: {
-        value: undefined
-    },
-    closestShowroomAddress: {
-        value: undefined
-    },
-    catalogLink: {
-        value: undefined
-    },
-    shippingDetails: {
+    orders: {
         value: undefined
     }
 

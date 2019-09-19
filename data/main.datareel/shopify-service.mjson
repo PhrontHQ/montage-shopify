@@ -9,17 +9,21 @@
                 {"@": "productVariantMapping"},
                 {"@": "productMapping"},
                 {"@": "productVariantPricePairMapping"},
-                {"@": "moneyMapping"}
+                {"@": "moneyMapping"},
+                {"@": "vendorMapping"},
+                {"@": "addressMapping"}
             ],
             "types": [
                 {"@": "collection"},
                 {"@": "product"},
                 {"@": "productVariant"},
                 {"@": "productVariantPricePair"},
-                {"@": "money"}
+                {"@": "money"},
+                {"@": "vendor"},
+                {"@": "address"}
             ]
         }
-    },
+    },  
 
     "collection": {
         "object": "data/main.datareel/model/collection.mjson"
@@ -59,6 +63,22 @@
 
     "moneyMapping": {
         "object": "data/main.datareel/mapping/money-mapping.mjson"
+    },
+
+    "vendor": {
+        "object": "data/main.datareel/model/vendor.mjson"
+    },
+
+    "vendorMapping": {
+        "object": "data/main.datareel/mapping/vendor-mapping.mjson"
+    },
+
+    "address": {
+        "object": "data/main.datareel/model/address.mjson"
+    },
+
+    "addressMapping": {
+        "object": "data/main.datareel/mapping/address-mapping.mjson"
     }
 
 }
