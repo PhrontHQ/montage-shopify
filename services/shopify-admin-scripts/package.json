@@ -1,0 +1,7 @@
+{
+    "name": "shopify-admin-scripts",
+    "version": "0.1.0",
+    "dependencies": {
+        "graphql-request": "1.8.2"
+    }
+}
