@@ -534,7 +534,7 @@ exports.ShopifyService = exports.ShopifyService = GraphQLService.specialize(/** 
                             this.addRawData(stream, [rawData]);
                             return this.rawDataDone(stream);
                         }
-                        else if(registeredStreams>1) {
+                        else if(registeredStreams.length>1) {
                             //If there's a known stream for an identical query in flight, we'll piggyback on that:
                             var rootStream = registeredStreams[0];
                             rootStream.then(function (data) {
@@ -548,13 +548,25 @@ exports.ShopifyService = exports.ShopifyService = GraphQLService.specialize(/** 
                         }
                     }
                 }
-                if(objectDescriptor.name === "Address") {
+                else if(objectDescriptor.name === "Address") {
+                    var locationAddressIds = JSON.parse(parameters),
+                        i=0, countI = locationAddressIds ? locationAddressIds.length : 0, iAddresdId, iDataIdentifier, iAddress,
+                        addresses = [];
+                    for(;i<countI;i++) {
+                        iAddresdId=locationAddressIds[i];
+                        iDataIdentifier = this.dataIdentifierForTypePrimaryKey(objectDescriptor, iAddresdId);
+                        iAddress = this.rootService.objectForDataIdentifier(iDataIdentifier);
+                        if(iAddress) {
+                            addresses.push(iAddress);
+                        }
+                    }
 
-            
+                    console.log("fetching Addresses");
+                    return;
                 }
 
                 //If there's a known stream for an identical query in flight, we'll piggyback on that:
-                if(registeredStreams>1) {
+                if(registeredStreams.length>1) {
                     return;
                 }
                 

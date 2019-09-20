@@ -2,7 +2,7 @@
     "root": {
         "prototype": "montage/core/meta/module-object-descriptor",
         "values": {
-            "name": "Vendor",
+            "name": "Address",
             "propertyDescriptors": [
                 {"@": "name"},
                 {"@": "firstName"},
@@ -19,17 +19,17 @@
                 {"@": "longitude"}
             ],
             "objectDescriptorModule": {
-                "%": "data/main.datareel/model/vendor.mjson"
+                "%": "data/main.datareel/model/address.mjson"
             },
-            "exportName": "Vendor",
+            "exportName": "Address",
             "module": {
-                "%": "data/main.datareel/model/vendor"
+                "%": "data/main.datareel/model/address"
             },
-            "object":{"@": "vendor"}
+            "object":{"@": "address"}
         }
     },
-    "vendor": {
-        "object": "data/main.datareel/model/vendor"
+    "address": {
+        "object": "data/main.datareel/model/address"
     },
     "name": {
         "prototype": "montage/core/meta/property-descriptor",

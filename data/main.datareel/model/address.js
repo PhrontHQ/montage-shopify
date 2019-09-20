@@ -6,7 +6,7 @@ var Montage = require("montage").Montage;
  */
 
 
-exports.Address = Montage.specialize(/** @lends Vendor.prototype */ {
+exports.Address = Montage.specialize(/** @lends Address.prototype */ {
 
     name: {
         value: undefined
