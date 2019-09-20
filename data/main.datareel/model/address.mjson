@@ -118,7 +118,7 @@
     "longitude": {
         "prototype": "montage/core/meta/property-descriptor",
         "values": {
-            "name": "latitude",
+            "name": "longitude",
             "valueType": "number"
        }
     }
