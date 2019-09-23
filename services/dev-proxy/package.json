@@ -1,8 +1,0 @@
-{
-    "name": "shopify-dev-proxy",
-    "version": "0.1.0",
-    "devDependencies": {
-        "http-proxy": "*",
-        "command-line-args": "5.1.1"
-    }
-}
