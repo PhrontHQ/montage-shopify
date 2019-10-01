@@ -15,7 +15,7 @@ exports.Collection = Montage.specialize(/** @lends Collection.prototype */ {
     description: {
         value: undefined
     },
-    descriptionHtml: {
+        : {
         value: undefined
     },
     image: {

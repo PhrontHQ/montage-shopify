@@ -7,8 +7,9 @@
             "objectMapping": {
                 "rules": {
                     "name": {"<->": "Name"},
-                    "vendors": {"<->": "Vendors",
-                    "converter": {"@": "vendorForeignKeysConverter"},
+                    "vendors": {
+                        "<->": "Vendors",
+                        "converter": {"@": "vendorForeignKeysConverter"}},
                     "photos": {"<->": "Photo"}
 
                 }
@@ -20,7 +21,7 @@
             "detections": {
                         "<-": "{sensorId: id, rawData: icd101aReport.detection}",
                         "converter": {"@": "detectionsForeignKeyConverter"}
-                    }
+            },
 
             "requisitePropertyNames": [
                 "id"
@@ -39,10 +40,10 @@
     },
     "detectionsForeignKeyConverter": {
         "prototype": "montage/data/converter/raw-property-value-to-object-converter",
-        "properties": {
+        "values": {
             "convertExpression": "sensorId == $.id && rawData == $.icd101aReport.detection"
         }
-    },
-
+    }
 
 }
+

@@ -39,7 +39,7 @@
                 }
             },
             "requisitePropertyNames": [
-                "title","description","descriptionHtml","images","link","type","vendor","variants"
+                "title","description","descriptionHtml","images","link","type","vendor","variants", "locations"
             ]
         }
     },
