@@ -68,6 +68,9 @@ exports.Product = Montage.specialize(/** @lends Product.prototype */ {
             }
         }
     },
+    locations: {
+        value: undefined
+    },            
     inStock: {
         get: function () {
             return this._inStock;
