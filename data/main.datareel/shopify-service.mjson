@@ -11,7 +11,8 @@
                 {"@": "productVariantPricePairMapping"},
                 {"@": "moneyMapping"},
                 {"@": "vendorMapping"},
-                {"@": "addressMapping"}
+                {"@": "addressMapping"},
+                {"@": "imageMapping"}
             ],
             "types": [
                 {"@": "collection"},
@@ -20,7 +21,8 @@
                 {"@": "productVariantPricePair"},
                 {"@": "money"},
                 {"@": "vendor"},
-                {"@": "address"}
+                {"@": "address"},
+                {"@": "image"}
             ]
         }
     },  
@@ -79,6 +81,13 @@
 
     "addressMapping": {
         "object": "data/main.datareel/mapping/address-mapping.mjson"
+    },
+    "image": {
+        "object": "data/main.datareel/model/image.mjson"
+    },
+    "imageMapping": {
+        "object": "data/main.datareel/mapping/image-mapping.mjson"
     }
+
 
 }

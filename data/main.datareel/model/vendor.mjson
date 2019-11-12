@@ -8,7 +8,8 @@
                 {"@": "lastName"},
                 {"@": "email"},
                 {"@": "phone"},
-                {"@": "addresses"}
+                {"@": "addresses"},
+                {"@": "tags"}
             ],
             "objectDescriptorModule": {
                 "%": "data/main.datareel/model/vendor.mjson"
@@ -63,6 +64,19 @@
 
     "addresses_descriptor": {
         "object": "data/main.datareel/model/address.mjson"
+    },
+    "tags": {
+        "prototype": "montage/core/meta/property-descriptor",
+        "values": {
+            "name": "tags",
+            "valueType": "string",
+            "cardinality": -1
+       }
+    },
+
+    "event_descriptor": {
+        "object": "data/main.datareel/model/event.mjson"
     }
+
 
 }

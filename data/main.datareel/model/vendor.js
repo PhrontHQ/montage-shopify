@@ -122,6 +122,9 @@ exports.Vendor = Montage.specialize(/** @lends Vendor.prototype */ {
     },
     orders: {
         value: undefined
+    },
+    tags: {
+        value: undefined
     }
 
 });

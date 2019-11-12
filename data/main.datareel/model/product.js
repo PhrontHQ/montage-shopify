@@ -53,6 +53,9 @@ exports.Product = Montage.specialize(/** @lends Product.prototype */ {
     },            
     schematics: {
         value: undefined
+    },   
+    vendorName: {
+        value: undefined
     },            
     _vendor: {
         value: null

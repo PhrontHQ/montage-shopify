@@ -6,7 +6,9 @@
             "rawDataPrimaryKeys":["id"],
             "objectMapping": {
                 "rules": {
-                    "altText": {"<->": "altText"}
+                    "altText": {"<->": "altText"},
+                    "originalSrc": {"<->": "originalSrc"},
+                    "transformedSrc": {"<->": "transformedSrc"}
                 }
             },
             "rawDataMapping": {
@@ -14,12 +16,12 @@
                 }
             },
             "requisitePropertyNames": [
-                "id"
+                "altText","originalSrc","transformedSrc"
             ]
         }
     },
 
-    "RoleDescriptor": {
-        "object": "data/model/image.mjson"
+    "ImageDescriptor": {
+        "object": "data/main.datareel/model/image.mjson"
     }
 }

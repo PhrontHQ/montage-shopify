@@ -2,48 +2,33 @@
     "root": {
         "prototype": "montage/core/meta/module-object-descriptor",
         "values": {
-            "name": "Product",
+            "name": "Service",
             "propertyDescriptors": [
-                {"@": "title"},
-                {"@": "orders"},
-                {"@": "images"},
-                {"@": "description"},
-                {"@": "descriptionHtml"},   
-                {"@": "link"},
-                {"@": "type"},
-                {"@": "unitCost"},
-                {"@": "settings"},
-                {"@": "notes"},
-                {"@": "vendorName"},
-                {"@": "vendor"},
-                {"@": "locations"},
-                {"@": "totalInventory"},
-                {"@": "totalVariants"},
-                {"@": "updatedAt"},
-                {"@": "variants"}
+                {"@": "duration"},
+                {"@": "requirements"}
             ],
             "objectDescriptorModule": {
-                "%": "data/main.datareel/model/product.mjson"
+                "%": "data/main.datareel/model/service.mjson"
             },
-            "exportName": "Product",
+            "exportName": "Service",
             "module": {
-                "%": "data/main.datareel/model/product"
+                "%": "data/main.datareel/model/service"
             },
-            "object":{"@": "product"}
+            "object":{"@": "service"}
         }
     },
-    "product": {
-        "object": "data/main.datareel/model/product"
+    "service": {
+        "object": "data/main.datareel/model/service"
     },
 
-    "title": {
+    "duration": {
         "prototype": "montage/core/meta/property-descriptor",
         "values": {
-            "name": "title",
-            "valueType": "string"
+            "name": "duration",
+            "valueType": "number"
         }
     },
-    "orders": {
+    "requirements": {
         "prototype": "montage/core/meta/property-descriptor",
         "values": {
             "name": "orders",
@@ -115,17 +100,10 @@
             "valueType": "string"
         }
     },
-     "vendorName": {
-        "prototype": "montage/core/meta/property-descriptor",
-        "values": { 
-            "name": "vendorName",
-            "valueType": "string"
-        }
-    },
     "vendor": {
         "prototype": "montage/core/meta/property-descriptor",
         "values": {
-            "name": "vendor",
+            "name": "vendors",
             "cardinality": 1,
             "valueDescriptor": {"@": "vendor_descriptor"}       
         }
@@ -159,23 +137,6 @@
             "valueType": "date"
         }
     },
-    "variants": {
-        "prototype": "montage/core/meta/property-descriptor",
-        "values": {
-            "name": "variants",
-            "cardinality": -1,
-            "valueDescriptor": {"@": "variant_descriptor"}
-        }
-    },
-    "locations": {
-        "prototype": "montage/core/meta/property-descriptor",
-        "values": {
-            "name": "locations",
-            "cardinality": -1,
-            "valueDescriptor": {"@": "address_descriptor"}       
-        }
-    },
-
     "order_line_item": {
         "object": "data/main.datareel/model/order-line-item.mjson"
     },
@@ -187,12 +148,6 @@
     },
     "image_descriptor": {
         "object": "data/main.datareel/model/image.mjson"
-    },
-    "variant_descriptor": {
-        "object": "data/main.datareel/model/product-variant.mjson"
-    },
-    "address_descriptor": {
-        "object": "data/main.datareel/model/address.mjson"
     }
 
 }

@@ -107,7 +107,7 @@
         "values": {
             "name": "presentmentPrices",
             "cardinality": -1,
-            "valueDescriptor": {"@": "ProductVariantPricePair_descriptor"}       
+            "valueType": "object"       
         }
     },
     "productDescriptor": {

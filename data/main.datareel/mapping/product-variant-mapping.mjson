@@ -22,7 +22,6 @@
                     "weight": {"<->": "weight"},
                     "weightUnit": {"<->": "weightUnit"},
                     "presentmentPrices": {"<->": "presentmentPrices.edges.map{node}",
-                                    "converter": {"@": "presentmentPricesConverter"},
                                          "debug":true}
                 }
             },

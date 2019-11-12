@@ -1,4 +1,6 @@
 var GraphQLService = require("montage/data/service/graphql-service").GraphQLService,
+    Criteria = require("montage/core/criteria").Criteria,
+    DataQuery = require("montage/data/model/data-query").DataQuery,
     DataService = require("montage/data/service/data-service").DataService,
     equal = require("fast-deep-equal/es6");
 
@@ -102,7 +104,7 @@ exports.ShopifyService = exports.ShopifyService = GraphQLService.specialize(/** 
     },
 
     adminAccessURIFragment: {
-        value: "/admin/api/2019-07/graphql.json"
+        value: "/admin/api/2019-10/graphql.json"
     },
 
     _adminAccessHost: {
@@ -260,8 +262,92 @@ exports.ShopifyService = exports.ShopifyService = GraphQLService.specialize(/** 
      * @return {String}
 
      */
+    _customerQueryDefaultBody: {
+        value: ")\
+        {\
+            id\
+            firstName\
+            lastName\
+            email\
+            phone\
+            addresses(first:5){\
+                  id\
+                  name\
+                  firstName\
+                  lastName\
+                  phone\
+                  company\
+                  address1\
+                  address2\
+                  city\
+                  provinceCode\
+                  zip\
+                  country\
+                  latitude\
+                  longitude\
+            }\
+          metafields(namespace:\"phront\" first: 10) {\
+            edges {\
+              node {\
+                id\
+                namespace\
+                key\
+                value\
+              }\
+            }\
+         }\
+      }"
+    },
+
+    _allCustomerQuery: {
+        value: {
+            "query":`
+                    query getCustomersWithCursor($batchSize: Int, $cursor: String)
+                        {
+                            customers(first:$batchSize, after:$cursor) {
+                                pageInfo {
+                                    hasNextPage
+                                    hasPreviousPage
+                                }
+                                edges {
+                                    cursor
+                                    node {
+                                    id
+                                    firstName
+                                    lastName
+                                    email
+                                    phone
+                                    addresses {
+                                        id
+                                        name
+                                        firstName
+                                        lastName
+                                        phone
+                                        company
+                                        address1
+                                        address2
+                                        city
+                                        provinceCode
+                                        zip
+                                        country
+                                        latitude
+                                        longitude
+                                    }
+                                    tags
+                                }
+                            }
+                        }
+                    }`,
+            "variables": {
+                "batchSize": 90,
+                "cursor": null
+            }
+        }
+    },
+    
+    //Passing stream is needed to accesss a current cursor
     mapDataQueryToRawDataQuery: {
-        value: function (dataQuery) {
+        value: function (dataQuery, stream) {
 
             var typeName = this.mapObjectDescriptorToRawDataType(dataQuery.type),
                 criteria = dataQuery.criteria,
@@ -281,11 +367,12 @@ exports.ShopifyService = exports.ShopifyService = GraphQLService.specialize(/** 
                           descriptionHtml\
                           handle\
                           image {\
+                            id\
                             altText\
                             originalSrc\
                             transformedSrc\
                           }\
-                          products(first:100)   {\
+                          products(first:170)   {\
                                 edges{\
                                     node{\
                                         id\
@@ -295,6 +382,7 @@ exports.ShopifyService = exports.ShopifyService = GraphQLService.specialize(/** 
                                         images(first:100) {\
                                             edges{\
                                                 node{\
+                                                    id\
                                                     altText\
                                                     originalSrc\
                                                     transformedSrc\
@@ -318,7 +406,6 @@ exports.ShopifyService = exports.ShopifyService = GraphQLService.specialize(/** 
                                                         id\
                                                     }\
                                                     availableForSale\
-                                                    requiresShipping\
                                                     selectedOptions {\
                                                         name\
                                                         value\
@@ -343,7 +430,7 @@ exports.ShopifyService = exports.ShopifyService = GraphQLService.specialize(/** 
                                             }\
                                         }\
                                     }\
-                                    metafields(first: 10) {\
+                                    metafields(first: 2) {\
                                         edges {\
                                           node {\
                                             id\
@@ -362,59 +449,40 @@ exports.ShopifyService = exports.ShopifyService = GraphQLService.specialize(/** 
                   }";
             }
             else if(typeName === "customers" /* also vendor */) {
-                console.log("fetching customers");
-                if(parameters && syntax && syntax.type === "equals") {
-                    if(syntax.args[0].type === "property")  {
-                        var property = syntax.args[0][1],
-                            value;
-                        if(syntax.args[1].type === "parameters") {
-                            value = parameters;
-                        }
+                //console.log("fetching customers");
 
-                        rawQuery = "query {\
-                            customer(id:\"";
-                            
-                        rawQuery+= value;
-
-                        rawQuery+= "\") {\
-                                      id\
-                                      firstName\
-                                      lastName\
-                                      email\
-                                      phone\
-                                      addresses(first:5){\
-                                            id\
-                                            name\
-                                            firstName\
-                                            lastName\
-                                            phone\
-                                            company\
-                                            address1\
-                                            address2\
-                                            city\
-                                            provinceCode\
-                                            zip\
-                                            country\
-                                            latitude\
-                                            longitude\
-                                      }\
-                                    metafields(namespace:\"phront\" first: 10) {\
-                                      edges {\
-                                        node {\
-                                          id\
-                                          namespace\
-                                          key\
-                                          value\
-                                        }\
-                                      }\
-                                   }\
-                                }\
-                            }\
-                        ";
-                        
+                if(parameters) {
+                    rawQuery = "query {\
+                        customer(";
+                    if(syntax && syntax.type === "equals") {
+                        if(syntax.args[0].type === "property")  {
+                            var property = syntax.args[0][1],
+                                value;
+                            if(syntax.args[1].type === "parameters") {
+                                value = parameters;
+                            }
+                            rawQuery += "id:\"";
+                            rawQuery+= value;
+                            rawQuery+= "\"";
                         }
                     }
+                    rawQuery += this._customerQueryDefaultBody;
+                    rawQuery += "}";       
+                } else {
+                    //Request for all customers:
+                    if(dataQuery.batchSize) {
+                        this._allCustomerQuery.variables.batchSize = dataQuery.batchSize;
+                    }
+
+                    if(stream  && stream.operation && stream.operation.cursor) {
+                        this._allCustomerQuery.variables.cursor = stream.operation.cursor;
+                    }
+
+                    rawQuery = JSON.stringify(this._allCustomerQuery);
+
                 }
+
+            }
 
             return rawQuery;
         }
@@ -449,7 +517,7 @@ exports.ShopifyService = exports.ShopifyService = GraphQLService.specialize(/** 
                 aQuery;
 
             if(queryStreams) {
-                queryStreams.push(stream);
+                queryStreams.add(stream);
             }
             //We don't know about that query yet:
             else {
@@ -459,14 +527,16 @@ exports.ShopifyService = exports.ShopifyService = GraphQLService.specialize(/** 
                     if(equal(aQuery, query)) {
                         //Same query, we add the stream to it and share the array.
                         queryStreams = streamsByQuery.get(aQuery);
-                        queryStreams.push(stream);
+                        queryStreams.add(stream);
                         streamsByQuery.set(query,queryStreams);
                         break;
                     }
                 }
                 //No previous similar query found:
                 if(!queryStreams) {
-                    streamsByQuery.set(query,(queryStreams = [stream]));
+                    queryStreams = new Set();
+                    queryStreams.add(stream);
+                    streamsByQuery.set(query,queryStreams);
                 }
             }
             return queryStreams;
@@ -506,7 +576,7 @@ exports.ShopifyService = exports.ShopifyService = GraphQLService.specialize(/** 
                 parameters = criteria.parameters,
                 apiUrl = this.mapDataQueryToRawServiceURL(query),
                 headers, body, types, sendCredentials,
-                rawQueryString = this.mapDataQueryToRawDataQuery(query),
+                rawQueryString = this.mapDataQueryToRawDataQuery(query,stream),
                 registeredStreams = this._registerStreamForQuery(stream,query);
 
 
@@ -534,9 +604,11 @@ exports.ShopifyService = exports.ShopifyService = GraphQLService.specialize(/** 
                             this.addRawData(stream, [rawData]);
                             return this.rawDataDone(stream);
                         }
-                        else if(registeredStreams.length>1) {
+                        else if(registeredStreams.size>1) {
                             //If there's a known stream for an identical query in flight, we'll piggyback on that:
-                            var rootStream = registeredStreams[0];
+                            var iterator = registeredStreams.values(),
+                                rootStream = iterator.next().value;
+                            
                             rootStream.then(function (data) {
 
                                 for(var i=0, iResult;(iResult = data[i]); i++) {
@@ -551,10 +623,17 @@ exports.ShopifyService = exports.ShopifyService = GraphQLService.specialize(/** 
                 else if(objectDescriptor.name === "Address") {
                     var locationAddressIds = JSON.parse(parameters),
                         i=0, countI = locationAddressIds ? locationAddressIds.length : 0, iAddresdId, iDataIdentifier, iAddress,
-                        addresses = [];
+                        addresses = [],
+                        identifierCriteria = Criteria.withExpression("identifier == $identifier"),
+                        identifierCriteriaSyntax = identifierCriteria.syntax;
                     for(;i<countI;i++) {
                         iAddresdId=locationAddressIds[i];
                         iDataIdentifier = this.dataIdentifierForTypePrimaryKey(objectDescriptor, iAddresdId);
+
+                        //Addresses may not be created yet. So I either need a new parallele API to objectForDataIdentifier() that returns a promise when the object is registered, or try to tie it to the vendor's addresses.
+                        // var identiferCriteria = (new Criteria()).initWithSyntax(identifierCriteriaSyntax,{identifier:iDataIdentifier}),
+                        //     identifierQuery = DataQuery.withTypeAndCriteria(objectDescriptor,identiferCriteria),
+                         //     identiferStream = this.rootService.fetchData(identifierQuery);
                         iAddress = this.rootService.objectForDataIdentifier(iDataIdentifier);
                         if(iAddress) {
                             addresses.push(iAddress);
@@ -566,7 +645,7 @@ exports.ShopifyService = exports.ShopifyService = GraphQLService.specialize(/** 
                 }
 
                 //If there's a known stream for an identical query in flight, we'll piggyback on that:
-                if(registeredStreams.length>1) {
+                if(registeredStreams.size>1 && !stream.operation && !stream.operation.cursor) {
                     return;
                 }
                 
@@ -582,39 +661,72 @@ exports.ShopifyService = exports.ShopifyService = GraphQLService.specialize(/** 
                 //Shared Secret: 07aeefeb0d3c94e3352700f02d063c77
                 //Private applications authenticate with Shopify through basic HTTP authentication, using the URL format https://{apikey}:{password}@{hostname}/admin/api/{version}/{resource}.json
                 headers = {
-                    "Content-Type": "application/graphql",
                     "Accept": "application/json"
                 };
+
+                if(rawQueryString.indexOf('{"query') === 0) {
+                    headers["Content-Type"] = "application/json";
+                }
+                else {
+                    headers["Content-Type"] = "application/graphql";
+                }
+
                 if(apiUrl !== this.adminAccessHost) {
                     headers[this.storefrontAccessTokenHeader] = this.storefrontAccessToken;
+                }
+                else {                    
+                    headers[this.adminAccessTokenHeader] = this.adminAccessToken;
                 }
 
                 sendCredentials = false;
             
         
+            //var fetchHttpRawDataCount = this._handleReadOperationCount++;              
+            //console.time("Shopify fetchHttpRawData "+fetchHttpRawDataCount);
             return self.fetchHttpRawData(apiUrl, headers, rawQueryString, types, query, sendCredentials).then(
                 function (result) {
+                    //console.timeEnd("Shopify fetchHttpRawData "+fetchHttpRawDataCount);
+
                     if (result) {
                         if(result.errors) {
-
+                            console.error(error);
                         }
                         else {
                             //We need to figure out what type is returned, and they could be nested, and nothing to do about the type of the query itself.
                             var data = result.data,
                                 types = Object.keys(data),
-                  i=0, countI = types.length, iType, iTypeValue, iEdges, 
-                                j=0, countJ, jNodes;
+                  i=0, countI = types.length, iType, iTypeValue, iEdges, iPageInfo, iCursor,
+                                j=0, countJ, jNode, jCursor;
 
+                            //#FIXME This is wasteful as we're slicing stream.data
+                            //To dispacth the right array.
+                            stream._lastBatchIndex = stream.data.length;
                             for(;(i<countI);i++) {
                                 iType = types[i];
                                 iTypeValue = data[iType];
+                                if(iPageInfo = iTypeValue["pageInfo"]) {
+                                    stream._hasNextPage = iPageInfo.hasNextPage;
+                                    stream._hasPreviousPage = iPageInfo.hasPreviousPage;
+                                }
+                                //Reset the cursor for the type
+                                iCursor = null;
                                 if(iEdges = iTypeValue["edges"]) {
                                     countJ = iEdges.length;
                                     jRawData = [];
                                     for(j=0;(j<countJ);j++) {
                                         jNode = iEdges[j]["node"];
+                                        //#DEBUG
+                                        // if(iType === "customers") {
+                                        //     console.log("--> Received Customer "+jNode.firstName+" "+jNode.lastName);
+                                        // }
                                         jRawData.push(jNode);
                                     }
+
+                                    jCursor = iEdges[j-1]["cursor"];
+                                    if(jCursor) {
+                                        stream._cursor = iCursor = jCursor;
+                                    }
+
                                     self.addRawData(stream, jRawData);    
                                 }
                                 else {
@@ -628,24 +740,31 @@ exports.ShopifyService = exports.ShopifyService = GraphQLService.specialize(/** 
                                 }
                             }
 
-                            self.rawDataDone(stream);    
+                            if(query.doesBatchResult) {
+                                self.rawDataBatchDone(stream);    
+                            }
+                            else {
+                                self.rawDataDone(stream);    
+                            }
                         }
                     }
+            },function(error) {
+                console.error(error);
             });
         }
-    }
-    /*
-    ,
+    },
 
-    mapRawDataToObject: {
-        value: function (rawData, object) {
-            object.id = rawData.id;
-            object.text = rawData.text;
-            object.created_at = rawData.created_at;
-            object.user = {
-                name: rawData.user.name
-            };
+    _handleReadOperationCount: {
+        value:0
+      },
+  
+    handleReadOperation: {
+        value: function(readOperation) {
+          var stream = readOperation.referrer;//DataStream for now
+
+            return this.fetchRawData(stream);
+
         }
-    }
-*/
+    }  
+    
 });

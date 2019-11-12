@@ -11,7 +11,9 @@
                     "email": {"<->": "email"},
                     "phone": {"<->": "phone"},
                     "addresses": {"<->": "addresses",
-                                    "converter": {"@": "addressesConverter"}}
+                                    "converter": {"@": "addressesConverter"}},
+                    "tags": {"<->": "tags"}
+
                 }
             },
             "rawDataMapping": {
@@ -19,7 +21,7 @@
                 }
             },
             "requisitePropertyNames": [
-                "firstName","lastName","email","phone","addresses"
+                "firstName","lastName","email","phone","addresses","tags"
             ]
         }
     },
